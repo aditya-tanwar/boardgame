@@ -36,18 +36,28 @@ pipeline {
         }
 
 
-
-        stage('compile') {
+        stage('Maven Validation & Compilation') {
             steps {
-                sh 'mvn compile'
+                sh "mvn validate" //-------- validate the project is correct and all necessary information is available 
+                sh "mvn clean compile -DskipTests=true" //------ compiles the source code of the project ,  -DskipTests=true compiles the tests but doesn't runs them
             }
-        }
-
-        stage('Test') {
+        } // End of Maven Compilation stage
+        
+        stage('Maven Unit Testing') { // This is a good practice , helps in early issue detection
             steps {
-                sh 'mvn test -DskipTests=true'
+                sh "mvn clean test" // testing the compiled code 
             }
-        }
+        } // End of Maven Unit Testing stage
+
+
+        stage('Maven Build & Verification') { 
+            steps {
+                //sh "cd Petclinic-main && mvn clean package -DskipTests=true" // build the maven project and create JAR & WAR file.
+                sh "mvn clean verify" // This is considered a good practice ( validate > complile > test > package > verify )
+            }
+        } // End of the Maven Build & Verification stage
+
+
 
         // stage('SonarQube Code Analysis') {
         //     environment {

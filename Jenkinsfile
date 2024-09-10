@@ -21,7 +21,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git credentialsId: 'git', poll: false, url: 'https://github.com/aditya-tanwar/boardgame.git'
+                git credentialsId: 'git', branch: main , poll: false, url: 'https://github.com/aditya-tanwar/boardgame.git'
                 sh 'mkdir Test-Results'
             }
         }

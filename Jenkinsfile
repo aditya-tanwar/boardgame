@@ -124,7 +124,7 @@ pipeline {
                 sh '''
                     export COSIGN_PASSWORD=${COSIGN_PASSWORD}
                     cosign generate-key-pair --output-key-prefix ${COSIGN_PASSWORD}
-                    cosign sign --key boardgame.key -a "author=adityatanwar03" adityatanwar03/boardgame:v1 -y 
+                    cosign sign --key ${COSIGN_PASSWORD}.key -a "author=adityatanwar03" adityatanwar03/boardgame:v1 -y 
                 '''
             }
         }

@@ -29,8 +29,8 @@ pipeline {
 
         stage('Trivy Filesystem Scan') {
             steps {
-                sh 'ls && pwd'
-                sh 'trivy fs --format table -o fs-trivy-report.html .'
+                sh 'ls && pwd && mkdir Test-Results'
+                sh 'trivy fs --format json -o Test-Results/fs-trivy-report.json .'
             }
         }
 
@@ -89,7 +89,7 @@ pipeline {
         stage('OWASP Dependency Check') {
             steps {
                 dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'owasp'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                dependencyCheckPublisher pattern: '**/Test-Results/owasp-dependency-check-report.xml'
                }
         }
 
@@ -102,8 +102,8 @@ pipeline {
 
         stage('Scanning Docker image') {
             steps {
-                sh 'trivy image --scanners vuln,misconfig,secret boardgame:v1 --format json -o Test-Results/trivy-image-results.json'
-                sh 'dockle -f json boardgame:v1 > Test-Results/dockle-image-results.json'
+                sh 'trivy image --scanners vuln,misconfig,secret boardgame:v1 --format json -o Test-Results/trivy-image-scan-results.json'
+                sh 'dockle -f json boardgame:v1 > Test-Results/dockle-image-scan-results.json'
             }
         }
 

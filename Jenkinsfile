@@ -10,7 +10,7 @@ pipeline {
     }
 
     environment {
-        COSIGN_PASSWORD = credentials('cosign-password')
+        COSIGN_PASSWORD = credentials('cosign_password')
     }
 
     // START OF THE STAGES

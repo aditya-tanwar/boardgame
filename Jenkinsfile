@@ -122,7 +122,7 @@ pipeline {
         stage('Signing the Docker Image') {
             steps {
                 sh '''
-                    export COSIGN_PASSWORD=env.COSIGN_PASSWORD
+                    export COSIGN_PASSWORD=${COSIGN_PASSWORD}
                     cosign generate-key-pair --output-key-prefix boardgame
                     cosing sign --key boardgame.key adityatanwar03/boardgame:v1
                 '''

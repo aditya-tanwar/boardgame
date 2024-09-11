@@ -9,6 +9,10 @@ pipeline {
         skipDefaultCheckout true
     }
 
+    environment {
+        COSIGN_PASSWORD = credentials('cosign-password')
+    }
+
     // START OF THE STAGES
     stages {
 
@@ -112,6 +116,16 @@ pipeline {
             steps {
                 sh 'docker tag boardgame:v1 adityatanwar03/boardgame:v1'
                 sh 'docker push adityatanwar03/boardgame:v1'
+            }
+        }
+
+        stage('Signing the Docker Image') {
+            steps {
+                sh '''
+                    export COSIGN_PASSWORD=env.COSIGN_PASSWORD
+                    cosign generate-key-pair --output-key-prefix boardgame
+                    cosing sign --key boardgame.key adityatanwar03/boardgame:v1
+                '''
             }
         }
 

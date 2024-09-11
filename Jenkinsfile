@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage(slack-notify) {
+        stage('slack-notify') {
             steps { 
                 echo "slack notification"
                 slacksend channel: '#boardgame', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", color: COLOR_MAP[currentBuild.currentResult]

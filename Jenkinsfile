@@ -21,7 +21,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', credentialsId: 'git', poll: false, url: 'https://github.com/aditya-tanwar/boardgame.git'
+                git branch: 'main', credentialsId: 'git', poll: false, url: 'https://github.com/adityatanwar03/boardgame.git'
                 sh 'mkdir Test-Results'
             }
         }
@@ -111,8 +111,8 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                sh 'docker tag boardgame:v1 aditya-tanwar/boardgame:v1'
-                sh 'docker push aditya-tanwar/boardgame:v1'
+                sh 'docker tag boardgame:v1 adityatanwar03/boardgame:v1'
+                sh 'docker push adityatanwar03/boardgame:v1'
             }
         }
 

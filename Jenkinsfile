@@ -130,6 +130,15 @@ pipeline {
         }
 
 
+// Starting of the CD phase 
+
+        stage('Updating the image in the kubernetes manifests') {
+            steps {
+                sh'./k8s-update.sh'
+            }
+        }
+
+
     } // END OF  THE STAGES
     
 }

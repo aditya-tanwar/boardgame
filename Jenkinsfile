@@ -138,6 +138,16 @@ pipeline {
             }
         }
 
+        stage('Deploying application') {
+            steps {
+                sh '''
+                    export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+                    kubectl create ns app1
+                    kubectl apply -f deployment-service.yaml -n app1
+                '''
+            }
+        }
+
 
     } // END OF  THE STAGES
     

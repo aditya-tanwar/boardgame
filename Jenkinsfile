@@ -145,12 +145,19 @@ pipeline {
             }
         }
 
+
+        stage('Trivy - Scanning the kubernetes cluster') {
+            steps {
+                sh 'sudo trivy k8s --report summary'
+            }
+        }
+
         stage('Deploying application') {
             steps {
                 sh '''
                     export KUBECONFIG=/tmp/k3s.yaml
                     kubectl create ns app1
-                    kubectl apply -f deployment-service.yaml -n app1
+                    kubectl apply -f ./k8s -n app1
                 '''
             }
         }
